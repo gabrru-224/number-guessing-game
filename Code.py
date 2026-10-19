@@ -1,31 +1,32 @@
 import random
 import math
 
-lower = int(input("Enter Lower bound:- "))
+lower = int(input("Enter lower bound: "))
+upper = int(input("Enter upper bound: "))
 
-upper = int(input("Enter Upper bound:- "))
+if lower >= upper:
+    print("The upper bound must be greater than the lower bound.")
+else:
+    secret_number = random.randint(lower, upper)
+    chances = math.ceil(math.log2(upper - lower + 1))
+    count = 0
+    won = False
 
-x = random.randint(lower, upper)
-print("\n\tYou've only",
-       round(math.log(upper - lower + 1, 2)),
-       " chances to guess the integer!\n")
+    print("You have", chances, "chances to guess!")
 
-count = 0
+    while count < chances:
+        guess = int(input("Guess a number: "))
+        count += 1
 
-while count < math.log(upper - lower + 1, 2):
-    count += 1
+        if guess == secret_number:
+            print("Congratulations! You won in", count, "tries!")
+            won = True
+            break
+        elif guess < secret_number:
+            print("Too low! Try again.")
+        else:
+            print("Too high! Try again.")
 
-    guess = int(input("Guess a number:- "))
-
-    if x == guess:
-        print("Conguratulations you did it in ",
-              count, " try")
-        break
-    elif x > guess:
-        print("You guessed too small!")
-    elif x < guess:
-        print("You Guessed too high!")
-
-if count >=math.log(upper - lower + 1, 2):
-    print("\nThe numnber is %d" % x)
-    print("\tBetter Luck Next time!")
+    if not won:
+        print("The secret number was", secret_number)
+        print("Better luck next time!")
